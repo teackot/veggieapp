@@ -28,10 +28,10 @@ void ConnectionDialog::on_connectButton_clicked()
     responseMsg = new QMessageBox;
 
     if (db.open()) {
-        responseMsg->setText("Success");
+        responseMsg->setText("Успешно");
         connect(responseMsg, SIGNAL(finished(int)), this, SLOT(on_responseMsg_finished(int)));
     } else {
-        responseMsg->setText("DB connection error:\n'" + db.lastError().text() + "'");
+        responseMsg->setText("Ошибка при подключении к БД:\n'" + db.lastError().text() + "'");
     }
 
     responseMsg->show();
