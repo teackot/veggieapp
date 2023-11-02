@@ -1,5 +1,5 @@
-#include "connectiondialog.h"
-#include "ui_connectiondialog.h"
+#include "ConnectionDialog.h"
+#include "ui_ConnectionDialog.h"
 
 ConnectionDialog::ConnectionDialog(QWidget *parent) :
     QWidget(parent),

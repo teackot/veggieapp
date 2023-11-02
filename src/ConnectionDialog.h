@@ -1,5 +1,4 @@
-#ifndef CONNECTIONDIALOG_H
-#define CONNECTIONDIALOG_H
+#pragma once
 
 #include <QWidget>
 #include <QtSql>
@@ -34,5 +33,3 @@ private:
     Ui::ConnectionDialog *ui;
     QSqlDatabase db;
 };
-
-#endif // CONNECTIONDIALOG_H

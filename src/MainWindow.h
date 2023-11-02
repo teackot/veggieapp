@@ -1,9 +1,7 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
-#include "connectiondialog.h"
-#include "ui_connectiondialog.h"
+#include "ConnectionDialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,4 +22,3 @@ private:
     Ui::MainWindow *ui;
     ConnectionDialog *connectionDialog;
 };
-#endif // MAINWINDOW_H
