@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QSqlQueryModel>
 #include "ConnectionDialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -18,7 +19,10 @@ public:
 private slots:
     void on_action_triggered();
 
+    void on_updateButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     ConnectionDialog *connectionDialog;
+    QSqlQueryModel *qmodel;
 };

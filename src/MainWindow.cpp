@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    qmodel = new QSqlQueryModel;
+    ui->tableView->setModel(qmodel);
 }
 
 MainWindow::~MainWindow()
@@ -13,9 +15,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_action_triggered()
 {
     connectionDialog = new ConnectionDialog();
     connectionDialog->show();
+}
+
+void MainWindow::on_updateButton_clicked()
+{
+    qmodel->setQuery("SELECT * FROM product");
 }

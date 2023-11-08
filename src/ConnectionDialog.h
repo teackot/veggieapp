@@ -27,7 +27,7 @@ public:
 
 private slots:
     void on_connectButton_clicked();
-    void on_responseMsg_finished(int result);
+    void responseMsg_finished(int result);
 
 private:
     Ui::ConnectionDialog *ui;

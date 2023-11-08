@@ -29,7 +29,7 @@ void ConnectionDialog::on_connectButton_clicked()
 
     if (db.open()) {
         responseMsg->setText("Успешно");
-        connect(responseMsg, SIGNAL(finished(int)), this, SLOT(on_responseMsg_finished(int)));
+        connect(responseMsg, SIGNAL(finished(int)), this, SLOT(responseMsg_finished(int)));
     } else {
         responseMsg->setText("Ошибка при подключении к БД:\n'" + db.lastError().text() + "'");
     }
@@ -37,8 +37,7 @@ void ConnectionDialog::on_connectButton_clicked()
     responseMsg->show();
 }
 
-void ConnectionDialog::on_responseMsg_finished(int result)
+void ConnectionDialog::responseMsg_finished(int result)
 {
     close();
 }
-
