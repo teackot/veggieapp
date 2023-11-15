@@ -6,12 +6,6 @@ INSERT INTO product
 VALUES
     ('Apple', 'Fruits'),
     ('Potato', 'Vegetables'),
-    ('Cucumber', 'Vegetables');
-
-INSERT INTO product
-VALUES
-    ('Cabbage', 'Vegetables');
-
-INSERT INTO product
-VALUES
+    ('Cucumber', 'Vegetables'),
+    ('Cabbage', 'Vegetables'),
     ('Orange', 'Fruits');

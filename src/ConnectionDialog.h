@@ -31,5 +31,4 @@ private slots:
 
 private:
     Ui::ConnectionDialog *ui;
-    QSqlDatabase db;
 };

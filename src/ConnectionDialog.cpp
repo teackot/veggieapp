@@ -6,16 +6,26 @@ ConnectionDialog::ConnectionDialog(QWidget *parent) :
     ui(new Ui::ConnectionDialog)
 {
     ui->setupUi(this);
+
+    responseMsg = new QMessageBox;
+
+    auto db = QSqlDatabase::addDatabase("QODBC3");
 }
 
 ConnectionDialog::~ConnectionDialog()
 {
     delete ui;
+    delete responseMsg;
 }
 
 void ConnectionDialog::on_connectButton_clicked()
 {
-    db = QSqlDatabase::addDatabase("QODBC");
+    auto db = QSqlDatabase::database("qt_sql_default_connection", false);
+
+    if (db.isOpen()) {
+        db.close();
+    }
+
     db.setDatabaseName(
         "DRIVER={" SQL_DRIVER_NAME "}"
         ";SERVER=" + ui->serverNameInput->text() +
@@ -24,8 +34,6 @@ void ConnectionDialog::on_connectButton_clicked()
     );
     db.setUserName(ui->usernameInput->text());
     db.setPassword(ui->passwordInput->text());
-
-    responseMsg = new QMessageBox;
 
     if (db.open()) {
         responseMsg->setText("Успешно");
