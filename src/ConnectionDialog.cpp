@@ -7,6 +7,11 @@ ConnectionDialog::ConnectionDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->serverNameInput->setText("localhost");
+    ui->dbNameInput->setText("veggieapp");
+    ui->usernameInput->setText("SA");
+    ui->passwordInput->setText("<YourStrong@Passw0rd>");
+
     responseMsg = new QMessageBox;
 
     auto db = QSqlDatabase::addDatabase("QODBC3");

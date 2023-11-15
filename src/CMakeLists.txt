@@ -10,6 +10,7 @@ add_executable(veggieapp
     ConnectionDialog.h
     ConnectionDialog.cpp
     ConnectionDialog.ui
+    AddDialog.h AddDialog.cpp AddDialog.ui
 )
 
 target_link_libraries(veggieapp PRIVATE
