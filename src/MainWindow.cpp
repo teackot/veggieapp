@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    qmodel = nullptr;
+    qmodel = new QSqlQueryModel;
+    ui->tableView->setModel(qmodel);
 
     connectionDialog = new ConnectionDialog;
 }
@@ -21,10 +22,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_triggered()
 {
-    delete qmodel;
     connectionDialog->show();
-    qmodel = new QSqlQueryModel;
-    ui->tableView->setModel(qmodel);
 }
 
 void MainWindow::on_updateButton_clicked()
