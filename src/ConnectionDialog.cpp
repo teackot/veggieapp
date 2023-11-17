@@ -37,20 +37,22 @@ void ConnectionDialog::on_connectButton_clicked()
     db.setUserName(ui->usernameInput->text());
     db.setPassword(ui->passwordInput->text());
 
+    auto responseMsg = new QMessageBox(this);
+
     if (db.open()) {
-        responseMsg.setText("Успешно");
+        responseMsg->setText("Успешно");
         QMetaObject::Connection connection = connect(
-            &responseMsg,
+            responseMsg,
             &QMessageBox::finished,
             this,
-            [this](int result) {
+            [this, responseMsg](int result) {
                 close();
-                responseMsg.disconnect(this);
+                responseMsg->disconnect(this);
             }
         );
     } else {
-        responseMsg.setText("Ошибка при подключении к БД:\n'" + db.lastError().text() + "'");
+        responseMsg->setText("Ошибка при подключении к БД:\n'" + db.lastError().text() + "'");
     }
 
-    responseMsg.show();
+    responseMsg->show();
 }

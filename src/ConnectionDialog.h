@@ -23,7 +23,6 @@ class ConnectionDialog : public QWidget
 public:
     explicit ConnectionDialog(QWidget *parent = nullptr);
     ~ConnectionDialog();
-    QMessageBox responseMsg;
 
 private slots:
     void on_connectButton_clicked();
