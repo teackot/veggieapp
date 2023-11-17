@@ -34,6 +34,7 @@ public:
 
 private slots:
     void on_connectButton_clicked();
+    void on_revealButton_toggled(bool checked);
 
 private:
     Ui::ConnectionDialog *ui;

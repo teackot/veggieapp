@@ -56,3 +56,24 @@ void ConnectionDialog::on_connectButton_clicked()
 
     responseMsg->show();
 }
+
+void ConnectionDialog::on_revealButton_toggled(bool checked)
+{
+    QString tooltip;
+    QIcon icon;
+    QLineEdit::EchoMode echoMode;
+
+    if (checked) {
+        tooltip  = "Скрыть пароль";
+        icon     = QIcon::fromTheme("view-conceal-symbolic");
+        echoMode = QLineEdit::Normal;
+    } else {
+        tooltip  = "Показать пароль";
+        icon     = QIcon::fromTheme("view-reveal-symbolic");
+        echoMode = QLineEdit::Password;
+    }
+
+    ui->revealButton->setToolTip(tooltip);
+    ui->revealButton->setIcon(icon);
+    ui->passwordInput->setEchoMode(echoMode);
+}
