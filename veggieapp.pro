@@ -10,15 +10,21 @@ CONFIG += c++17
 
 SOURCES += \
     ConnectionDialog.cpp \
+    AddDialog.cpp \
+    ModifyDialog.cpp \
     MainWindow.cpp \
     main.cpp
 
 HEADERS += \
     ConnectionDialog.h \
+    AddDialog.h \
+    ModifyDialog.h \
     MainWindow.h
 
 FORMS += \
     ConnectionDialog.ui \
+    AddDialog.ui \
+    ModifyDialog.ui \
     MainWindow.ui
 
 # Default rules for deployment.

@@ -11,6 +11,8 @@ add_executable(veggieapp
     ConnectionDialog.cpp
     ConnectionDialog.ui
     AddDialog.h AddDialog.cpp AddDialog.ui
+    ModifyDialog.h ModifyDialog.cpp ModifyDialog.ui
+    PrintDialog.h PrintDialog.cpp PrintDialog.ui
 )
 
 target_link_libraries(veggieapp PRIVATE

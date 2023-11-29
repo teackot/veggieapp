@@ -2,8 +2,13 @@
 
 #include <QMainWindow>
 #include <QSqlQueryModel>
+#include <QPoint>
+#include <QMenu>
+#include <QAction>
+
 #include "ConnectionDialog.h"
 #include "AddDialog.h"
+#include "ModifyDialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +33,11 @@ private slots:
     void on_editButton_clicked();
     void on_deleteButton_clicked();
 
+    void handleActionModify();
+    void handleActionDelete();
+
+    void customMenuReq(QPoint pos);
+
 private:
     Ui::MainWindow *ui;
 
@@ -35,4 +45,7 @@ private:
 
     ConnectionDialog *connectionDialog;
     AddDialog *addDialog;
+    ModifyDialog *modifyDialog;
+
+    int selectedId;
 };

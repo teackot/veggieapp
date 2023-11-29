@@ -11,7 +11,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableView->setModel(qmodel);
 
     connectionDialog = new ConnectionDialog;
-    addDialog = nullptr;
+    // addDialog = nullptr;
+    addDialog = new AddDialog;
+    modifyDialog = new ModifyDialog;
+
+    connect(
+        ui->tableView,
+        SIGNAL(customContextMenuRequested(QPoint)),
+        this,
+        SLOT(customMenuReq(QPoint))
+    );
+
+    selectedId = -1;
 }
 
 MainWindow::~MainWindow()
@@ -20,6 +31,7 @@ MainWindow::~MainWindow()
     delete qmodel;
     delete connectionDialog;
     delete addDialog;
+    delete modifyDialog;
 }
 
 void MainWindow::on_action_triggered()
@@ -34,7 +46,6 @@ void MainWindow::on_updateButton_clicked()
 
 void MainWindow::on_addButton_clicked()
 {
-    addDialog = new AddDialog;
     addDialog->show();
 }
 
@@ -79,5 +90,39 @@ void MainWindow::on_editButton_clicked()
     query.bindValue(":id", ui->idDisplay->text().toInt());
     query.exec();
 
+    on_updateButton_clicked();
+}
+
+void MainWindow::customMenuReq(QPoint pos)
+{
+    if (qmodel->rowCount() > 0) {
+        QModelIndex index = ui->tableView->indexAt(pos);
+        selectedId = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toInt();
+
+        auto *menu = new QMenu(this);
+        auto *actionModify = new QAction("Изменить", this);
+        auto *actionDelete = new QAction("Удалить", this);
+
+        connect(actionModify, SIGNAL(triggered()), this, SLOT(handleActionModify()));
+        connect(actionDelete, SIGNAL(triggered()), this, SLOT(handleActionDelete()));
+
+        menu->addActions({actionModify, actionDelete});
+
+        menu->popup(ui->tableView->viewport()->mapToGlobal(pos));
+    }
+}
+
+void MainWindow::handleActionModify()
+{
+    modifyDialog->setId(selectedId);
+    modifyDialog->show();
+}
+
+void MainWindow::handleActionDelete()
+{
+    QSqlQuery query;
+    query.prepare("DELETE FROM product WHERE id=:id");
+    query.bindValue(":id", selectedId);
+    query.exec();
     on_updateButton_clicked();
 }
