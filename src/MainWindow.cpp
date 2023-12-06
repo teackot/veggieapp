@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     // addDialog = nullptr;
     addDialog = new AddDialog;
     modifyDialog = new ModifyDialog;
+    printDialog = new PrintDialog;
 
     connect(
         ui->tableView,
@@ -32,6 +33,7 @@ MainWindow::~MainWindow()
     delete connectionDialog;
     delete addDialog;
     delete modifyDialog;
+    delete printDialog;
 }
 
 void MainWindow::on_action_triggered()
@@ -125,4 +127,9 @@ void MainWindow::handleActionDelete()
     query.bindValue(":id", selectedId);
     query.exec();
     on_updateButton_clicked();
+}
+
+void MainWindow::on_exportButton_clicked()
+{
+    printDialog->show();
 }

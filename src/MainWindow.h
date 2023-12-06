@@ -9,6 +9,7 @@
 #include "ConnectionDialog.h"
 #include "AddDialog.h"
 #include "ModifyDialog.h"
+#include "PrintDialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -38,6 +39,8 @@ private slots:
 
     void customMenuReq(QPoint pos);
 
+    void on_exportButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -46,6 +49,7 @@ private:
     ConnectionDialog *connectionDialog;
     AddDialog *addDialog;
     ModifyDialog *modifyDialog;
+    PrintDialog *printDialog;
 
     int selectedId;
 };

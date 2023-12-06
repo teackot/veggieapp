@@ -18,6 +18,7 @@ add_executable(veggieapp
 target_link_libraries(veggieapp PRIVATE
     Qt::Widgets
     Qt::Sql
+    Qt::PrintSupport
 )
 
 include(GNUInstallDirs)

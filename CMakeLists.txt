@@ -16,6 +16,7 @@ find_package(
 
     Widgets
     Sql
+    PrintSupport
 )
 
 add_subdirectory(src)
