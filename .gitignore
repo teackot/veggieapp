@@ -78,3 +78,5 @@ build
 # IDEs
 .idea
 .vscode
+
+.cache
