@@ -15,53 +15,94 @@ PrintDialog::~PrintDialog()
 
 void PrintDialog::on_fpickerButton_clicked()
 {
-    ui->fnameInput->setText(QFileDialog::getOpenFileName(0, "Выберите файл", "./", "*.html"));
+    QString filter;
+    if (ui->htmlRadio->isChecked()) {
+        filter = "*.html";
+    } else if (ui->pdfRadio->isChecked()) {
+        filter = "*.pdf";
+    } else if (ui->odtRadio->isChecked()) {
+        filter = "*.odt";
+    }
+
+    ui->fnameInput->setText(QFileDialog::getSaveFileName(
+        this,
+        "Экспортировать как",
+        "./",
+        filter
+    ));
 }
 
 void PrintDialog::on_exportButton_clicked()
 {
-    QFile file;
-    file.setFileName(ui->fnameInput->text());
-    file.open(QIODevice::WriteOnly);
-
-    QTextStream in(&file);
-    in << "<html>";
-        in << "<head/>";
-        in << "<body>";
-            in << "<center>";
-                in << "Пример создания отчета";
-                in << "<table border=1>";
-                    in << "<tr>";
-                        in << "<td>" << "ID" << "</td>";
-                        in << "<td>" << "Наименование" << "</td>";
-                        in << "<td>" << "Категория" << "</td>";
-                    in << "</tr>";
+    // build HTML
+    QString html;
+    QTextStream stream(&html);
+    stream << "<html>";
+        stream << "<head/>";
+        stream << "<body>";
+            stream << "<center>";
+                stream << QString("Отчет");
+                stream << "<table border=1>";
+                    stream << "<tr>";
+                        stream << "<td>" << "ID" << "</td>";
+                        stream << "<td>" << QString("Наименование") << "</td>";
+                        stream << "<td>" << QString("Категория") << "</td>";
+                    stream << "</tr>";
 
                     QSqlQuery query;
                     query.exec("SELECT * FROM product");
                     while (query.next()) {
-                        in << "<tr>";
-                            in << "<td>" << query.value(0).toString() << "</td>";
-                            in << "<td>" << query.value(1).toString() << "</td>";
-                            in << "<td>" << query.value(2).toString() << "</td>";
-                        in << "</tr>";
+                        stream << "<tr>";
+                            stream << "<td>" << query.value(0).toString() << "</td>";
+                            stream << "<td>" << query.value(1).toString() << "</td>";
+                            stream << "<td>" << query.value(2).toString() << "</td>";
+                        stream << "</tr>";
                     }
 
-                in << "</table>";
-            in << "</center>";
-        in << "</body>";
-    in << "</html>";
+                stream << "</table>";
+            stream << "</center>";
+        stream << "</body>";
+    stream << "</html>";
 
-    // QPrinter printer;
-    // printer.setOrientation(QPrinter::Portrait);
-    // printer.setOutputFormat(QPrinter::PdfFormat);
-    // printer.setPaperSize(QPrinter::A4);
-    // printer.setOutputFileName(file.fileName() + ".pdf");
+    auto fname = ui->fnameInput->text();
+    if (ui->htmlRadio->isChecked()) {
+        writeFile(fname, html);
+    } else if (ui->pdfRadio->isChecked()) {
+        writePdf(fname, html);
+    } else if (ui->odtRadio->isChecked()) {
+        writeOdt(fname, html);
+    }
+}
 
-    // QTextDocument doc;
-    // doc.setHtml(in.readAll());
-    // doc.print(&printer);
-    
+void PrintDialog::writeFile(QString fname, QString text)
+{
+    QFile file;
+    file.setFileName(fname);
+    file.open(QIODevice::WriteOnly);
+
+    file.write(text.toUtf8());
+
     file.close();
 }
 
+void PrintDialog::writePdf(QString fname, QString html)
+{
+    QPrinter printer;
+    printer.setPageOrientation(QPageLayout::Portrait);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setPageSize(QPageSize::A4);
+    printer.setOutputFileName(fname);
+
+    QTextDocument doc;
+    doc.setHtml(html);
+    doc.print(&printer);
+}
+
+void PrintDialog::writeOdt(QString fname, QString html)
+{
+    QTextDocument doc;
+    doc.setHtml(html);
+
+    QTextDocumentWriter writer(fname, "odf");
+    writer.write(&doc);
+}

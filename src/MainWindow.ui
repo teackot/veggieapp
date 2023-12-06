@@ -30,6 +30,29 @@
         </property>
        </widget>
       </item>
+      <item alignment="Qt::AlignLeft">
+       <widget class="QPushButton" name="exportButton">
+        <property name="text">
+         <string>Экспорт</string>
+        </property>
+        <property name="icon">
+         <iconset theme="emblem-shared-symbolic"/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </item>
     <item>
@@ -42,13 +65,6 @@
       </property>
       <property name="selectionBehavior">
        <enum>QAbstractItemView::SelectRows</enum>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="exportButton">
-      <property name="text">
-       <string>Экспорт</string>
       </property>
      </widget>
     </item>
