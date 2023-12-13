@@ -1,7 +1,5 @@
-CREATE DATABASE veggieapp
-GO
-USE veggieapp
-GO
+CREATE DATABASE veggieapp;
+USE veggieapp;
 CREATE TABLE product (id int IDENTITY PRIMARY KEY, name nvarchar(30), cat_id nvarchar(30));
 
 INSERT INTO product
