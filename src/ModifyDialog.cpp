@@ -26,13 +26,18 @@ void ModifyDialog::setId(int id)
     this->id = id;
 
     QSqlQuery query;
-    query.prepare("SELECT name, cat_id, img FROM product WHERE id=?");
+    query.prepare("SELECT "
+        "name, cat_id, img, delivery_date "
+        "FROM product "
+        "WHERE id=?"
+    );
     query.bindValue(0, id);
     if (query.exec()) {
         query.next();
         ui->nameInput->setText(query.value(0).toString());
         ui->categoryInput->setText(query.value(1).toString());
         ui->fnameInput->setText(query.value(2).toString());
+        ui->dateEdit->setDate(query.value(3).toDate());
     }
 }
 
@@ -61,12 +66,14 @@ void ModifyDialog::on_editButton_clicked()
         "SET "
             "name = :name, "
             "cat_id = :cat_id, "
-            "img = :img "
+            "img = :img, "
+            "delivery_date = :date "
         "WHERE id = :id "
     );
     query.bindValue(":name", ui->nameInput->text());
     query.bindValue(":cat_id", ui->categoryInput->text());
     query.bindValue(":img", ui->fnameInput->text());
+    query.bindValue(":date", ui->dateEdit->date());
     query.bindValue(":id", id);
 
     if (query.exec()) {

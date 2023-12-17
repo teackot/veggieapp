@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>457</width>
-    <height>190</height>
+    <height>194</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,6 +39,17 @@
             </widget>
            </item>
           </layout>
+         </item>
+         <item>
+          <widget class="QDateEdit" name="dateEdit">
+           <property name="date">
+            <date>
+             <year>1970</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
          </item>
          <item>
           <spacer name="verticalSpacer">

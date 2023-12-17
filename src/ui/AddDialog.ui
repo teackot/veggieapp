@@ -43,6 +43,13 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="2">
+          <widget class="QToolButton" name="fpickerButton">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_2">
            <property name="text">
@@ -50,10 +57,21 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
-          <widget class="QToolButton" name="fpickerButton">
+         <item row="3" column="1">
+          <widget class="QDateEdit" name="dateEdit">
+           <property name="date">
+            <date>
+             <year>1970</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>...</string>
+            <string>Дата поставки</string>
            </property>
           </widget>
          </item>

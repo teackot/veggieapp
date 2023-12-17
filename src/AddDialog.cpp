@@ -2,12 +2,15 @@
 #include "ui_AddDialog.h"
 
 #include <QFileDialog>
+#include <QDate>
 
 AddDialog::AddDialog(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AddDialog)
 {
     ui->setupUi(this);
+
+    ui->dateEdit->setDate(QDate::currentDate());
 }
 
 AddDialog::~AddDialog()
@@ -38,10 +41,12 @@ void AddDialog::on_addButton_clicked()
     query.prepare(
         "INSERT "
         "INTO product (name, cat_id, img, delivery_date) "
-        "VALUES (:name, :cat_id, :img, '1970-01-01')");
+        "VALUES (:name, :cat_id, :img, :date)"
+    );
     query.bindValue(":name", ui->nameInput->text());
     query.bindValue(":cat_id", ui->categoryInput->text());
     query.bindValue(":img", ui->imgInput->text());
+    query.bindValue(":date", ui->dateEdit->date());
 
     QMessageBox msg;
     if (query.exec()) {

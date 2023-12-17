@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+
 #include <qpixmap.h>
+#include <QDate>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     qmodel = new QSqlQueryModel;
     ui->tableView->setModel(qmodel);
+
+    ui->dateEdit->setDate(QDate::currentDate());
 
     connectionDialog = new ConnectionDialog;
     // addDialog = nullptr;
@@ -58,7 +62,11 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
     tempId = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toInt();
 
     QSqlQuery query;
-    query.prepare("SELECT name, cat_id, img FROM product WHERE id = :id");
+    query.prepare("SELECT "
+        "name, cat_id, img, delivery_date "
+        "FROM product "
+        "WHERE id = :id"
+    );
     query.bindValue(":id", tempId);
 
     ui->idDisplay->setText(QString::number(tempId));
@@ -69,10 +77,12 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
         const auto name = query.value(0).toString();
         const auto cat = query.value(1).toString();
         const auto img = query.value(2).toString();
+        const auto date = query.value(3).toDate();
 
         ui->nameInput->setText(name);
         ui->categoryInput->setText(cat);
         ui->imgInput->setText(img);
+        ui->dateEdit->setDate(date);
 
         const int labelHeight = ui->imgLabel->height();
         const QPixmap pixmap(img);
@@ -118,13 +128,15 @@ void MainWindow::on_editButton_clicked()
         "UPDATE product "
         "SET name = :name, "
         "cat_id = :cat_id, "
-        "img = :img "
+        "img = :img, "
+        "delivery_date = :date "
         "WHERE id = :id "
     );
     query.bindValue(":name", ui->nameInput->text());
     query.bindValue(":cat_id", ui->categoryInput->text());
     query.bindValue(":img", ui->imgInput->text());
     query.bindValue(":id", ui->idDisplay->text().toInt());
+    query.bindValue(":date", ui->dateEdit->date());
     query.exec();
 
     on_updateButton_clicked();
