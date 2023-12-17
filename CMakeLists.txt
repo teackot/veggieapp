@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.16)
 project(veggieapp LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_AUTOUIC_SEARCH_PATHS ui)
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
