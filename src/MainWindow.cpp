@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include <qpixmap.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -57,7 +58,7 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
     tempId = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toInt();
 
     QSqlQuery query;
-    query.prepare("SELECT name, cat_id FROM product WHERE id = :id");
+    query.prepare("SELECT name, cat_id, img FROM product WHERE id = :id");
     query.bindValue(":id", tempId);
 
     ui->idDisplay->setText(QString::number(tempId));
@@ -66,6 +67,10 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
         query.next();
         ui->nameInput->setText(query.value(0).toString());
         ui->categoryInput->setText(query.value(1).toString());
+
+        const int labelHeight = ui->imgLabel->height();
+        const QPixmap pixmap(query.value(2).toString());
+        ui->imgLabel->setPixmap(pixmap.scaledToHeight(labelHeight));
     }
 }
 
