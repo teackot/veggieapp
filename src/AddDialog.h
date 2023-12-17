@@ -18,6 +18,8 @@ public:
     ~AddDialog();
 
 private slots:
+    void on_imgInput_textChanged(QString text);
+    void on_fpickerButton_clicked();
     void on_addButton_clicked();
 
 private:
