@@ -65,13 +65,36 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
 
     if (query.exec()) {
         query.next();
-        ui->nameInput->setText(query.value(0).toString());
-        ui->categoryInput->setText(query.value(1).toString());
+
+        const auto name = query.value(0).toString();
+        const auto cat = query.value(1).toString();
+        const auto img = query.value(2).toString();
+
+        ui->nameInput->setText(name);
+        ui->categoryInput->setText(cat);
+        ui->imgInput->setText(img);
 
         const int labelHeight = ui->imgLabel->height();
-        const QPixmap pixmap(query.value(2).toString());
+        const QPixmap pixmap(img);
         ui->imgLabel->setPixmap(pixmap.scaledToHeight(labelHeight));
     }
+}
+
+void MainWindow::on_imgInput_textChanged(QString text)
+{
+    const int labelHeight = ui->imgLabel->height();
+    const QPixmap pixmap(text);
+    ui->imgLabel->setPixmap(pixmap.scaledToHeight(labelHeight));
+}
+
+void MainWindow::on_fpickerButton_clicked()
+{
+    ui->imgInput->setText(QFileDialog::getOpenFileName(
+        this,
+        "Выбрать изображение",
+        "./",
+        "*.jpg"
+    ));
 }
 
 void MainWindow::on_deleteButton_clicked()
@@ -91,9 +114,16 @@ void MainWindow::on_deleteButton_clicked()
 void MainWindow::on_editButton_clicked()
 {
     QSqlQuery query;
-    query.prepare("UPDATE product SET name = :name, cat_id = :cat_id  WHERE id = :id");
+    query.prepare(
+        "UPDATE product "
+        "SET name = :name, "
+        "cat_id = :cat_id, "
+        "img = :img "
+        "WHERE id = :id "
+    );
     query.bindValue(":name", ui->nameInput->text());
     query.bindValue(":cat_id", ui->categoryInput->text());
+    query.bindValue(":img", ui->imgInput->text());
     query.bindValue(":id", ui->idDisplay->text().toInt());
     query.exec();
 

@@ -31,6 +31,9 @@ private slots:
 
     void on_tableView_clicked(const QModelIndex &index);
 
+    void on_imgInput_textChanged(QString text);
+    void on_fpickerButton_clicked();
+
     void on_editButton_clicked();
     void on_deleteButton_clicked();
 
