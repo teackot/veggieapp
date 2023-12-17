@@ -37,7 +37,7 @@ void AddDialog::on_addButton_clicked()
     QSqlQuery query;
     query.prepare(
         "INSERT "
-        "INTO product (name, cat_id, img, dt) "
+        "INTO product (name, cat_id, img, delivery_date) "
         "VALUES (:name, :cat_id, :img, '1970-01-01')");
     query.bindValue(":name", ui->nameInput->text());
     query.bindValue(":cat_id", ui->categoryInput->text());
