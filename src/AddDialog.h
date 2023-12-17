@@ -1,5 +1,4 @@
-#ifndef ADDDIALOG_H
-#define ADDDIALOG_H
+#pragma once
 
 #include <QWidget>
 #include <QSqlQuery>
@@ -24,6 +23,7 @@ private slots:
 
 private:
     Ui::AddDialog *ui;
-};
 
-#endif // ADDDIALOG_H
+protected:
+    void showEvent(QShowEvent *event);
+};

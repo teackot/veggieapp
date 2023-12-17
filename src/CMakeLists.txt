@@ -21,6 +21,9 @@ add_executable(veggieapp
     PrintDialog.h
     PrintDialog.cpp
 
+    util.h
+    util.cpp
+
     ui/MainWindow.ui
     ui/ConnectionDialog.ui
     ui/AddDialog.ui

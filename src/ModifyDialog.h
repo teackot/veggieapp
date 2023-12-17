@@ -1,5 +1,4 @@
-#ifndef MODIFYDIALOG_H
-#define MODIFYDIALOG_H
+#pragma once
 
 #include <QWidget>
 #include <QSqlQuery>
@@ -31,5 +30,3 @@ private:
 protected:
     void showEvent(QShowEvent *event) override;
 };
-
-#endif // MODIFYDIALOG_H

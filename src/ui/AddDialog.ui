@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>176</height>
+    <width>591</width>
+    <height>227</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,9 +20,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="categoryInput"/>
-         </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="nameInput"/>
          </item>
@@ -74,6 +71,9 @@
             <string>Дата поставки</string>
            </property>
           </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="categoryCombo"/>
          </item>
         </layout>
        </item>

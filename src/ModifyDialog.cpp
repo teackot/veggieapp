@@ -1,6 +1,8 @@
 #include "ModifyDialog.h"
 #include "ui_ModifyDialog.h"
 
+#include "src/util.h"
+
 #include <QFileDialog>
 
 ModifyDialog::ModifyDialog(QWidget *parent) :
@@ -35,7 +37,9 @@ void ModifyDialog::setId(int id)
     if (query.exec()) {
         query.next();
         ui->nameInput->setText(query.value(0).toString());
-        ui->categoryInput->setText(query.value(1).toString());
+        ui->categoryCombo->clear();
+        ui->categoryCombo->addItems(getCategories());
+        ui->categoryCombo->setCurrentIndex(query.value(1).toInt() - 1);
         ui->fnameInput->setText(query.value(2).toString());
         ui->dateEdit->setDate(query.value(3).toDate());
     }
@@ -71,7 +75,7 @@ void ModifyDialog::on_editButton_clicked()
         "WHERE id = :id "
     );
     query.bindValue(":name", ui->nameInput->text());
-    query.bindValue(":cat_id", ui->categoryInput->text());
+    query.bindValue(":cat_id", ui->categoryCombo->currentIndex() + 1);
     query.bindValue(":img", ui->fnameInput->text());
     query.bindValue(":date", ui->dateEdit->date());
     query.bindValue(":id", id);

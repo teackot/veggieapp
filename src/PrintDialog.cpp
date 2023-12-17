@@ -1,4 +1,5 @@
 #include "PrintDialog.h"
+#include "src/util.h"
 #include "ui_PrintDialog.h"
 
 PrintDialog::PrintDialog(QWidget *parent) :
@@ -55,7 +56,9 @@ void PrintDialog::on_exportButton_clicked()
                         stream << "<tr>";
                             stream << "<td>" << query.value(0).toString() << "</td>";
                             stream << "<td>" << query.value(1).toString() << "</td>";
-                            stream << "<td>" << query.value(2).toString() << "</td>";
+                            stream << "<td>" <<
+                                getCategoryName(query.value(2).toInt())
+                            << "</td>";
                         stream << "</tr>";
                     }
 

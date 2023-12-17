@@ -4,6 +4,8 @@
 #include <qpixmap.h>
 #include <QDate>
 
+#include "util.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -16,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dateEdit->setDate(QDate::currentDate());
 
     connectionDialog = new ConnectionDialog;
-    // addDialog = nullptr;
     addDialog = new AddDialog;
     modifyDialog = new ModifyDialog;
     printDialog = new PrintDialog;
@@ -48,7 +49,18 @@ void MainWindow::on_action_triggered()
 
 void MainWindow::on_updateButton_clicked()
 {
-    qmodel->setQuery("SELECT * FROM product");
+    qmodel->setQuery(
+        "SELECT "
+            "p.id as ID, "
+            "p.name as Название, "
+            "(  SELECT c.name "
+            "   FROM category c "
+            "   WHERE c.id = p.cat_id) "
+            "   as Категория, "
+            "p.img as Изображение, "
+            "p.delivery_date as Поставка "
+            "FROM product p"
+    );
 }
 
 void MainWindow::on_addButton_clicked()
@@ -62,8 +74,8 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
     tempId = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toInt();
 
     QSqlQuery query;
-    query.prepare("SELECT "
-        "name, cat_id, img, delivery_date "
+    query.prepare(
+        "SELECT name, cat_id, img, delivery_date "
         "FROM product "
         "WHERE id = :id"
     );
@@ -75,12 +87,16 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
         query.next();
 
         const auto name = query.value(0).toString();
-        const auto cat = query.value(1).toString();
+        const auto cat_id =  query.value(1).toInt();
         const auto img = query.value(2).toString();
         const auto date = query.value(3).toDate();
 
+        const auto cats = getCategories();
+
         ui->nameInput->setText(name);
-        ui->categoryInput->setText(cat);
+        ui->categoryCombo->clear();
+        ui->categoryCombo->addItems(cats);
+        ui->categoryCombo->setCurrentIndex(cat_id - 1);
         ui->imgInput->setText(img);
         ui->dateEdit->setDate(date);
 
@@ -116,7 +132,7 @@ void MainWindow::on_deleteButton_clicked()
 
     ui->idDisplay->clear();
     ui->nameInput->clear();
-    ui->categoryInput->clear();
+    ui->categoryCombo->clear();
 
     on_updateButton_clicked();
 }
@@ -133,7 +149,7 @@ void MainWindow::on_editButton_clicked()
         "WHERE id = :id "
     );
     query.bindValue(":name", ui->nameInput->text());
-    query.bindValue(":cat_id", ui->categoryInput->text());
+    query.bindValue(":cat_id", ui->categoryCombo->currentIndex() + 1);
     query.bindValue(":img", ui->imgInput->text());
     query.bindValue(":id", ui->idDisplay->text().toInt());
     query.bindValue(":date", ui->dateEdit->date());

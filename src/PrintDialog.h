@@ -1,5 +1,4 @@
-#ifndef PRINTDIALOG_H
-#define PRINTDIALOG_H
+#pragma once
 
 #include <QWidget>
 #include <QDialog>
@@ -35,5 +34,3 @@ private:
     static void writePdf(QString fname, QString html);
     static void writeOdt(QString fname, QString html);
 };
-
-#endif // PRINTDIALOG_H
