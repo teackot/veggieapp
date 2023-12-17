@@ -48,6 +48,8 @@ void PrintDialog::on_exportButton_clicked()
                         stream << "<td>" << "ID" << "</td>";
                         stream << "<td>" << QString("Наименование") << "</td>";
                         stream << "<td>" << QString("Категория") << "</td>";
+                        stream << "<td>" << QString("Изображение") << "</td>";
+                        stream << "<td>" << QString("Дата поставки") << "</td>";
                     stream << "</tr>";
 
                     QSqlQuery query;
@@ -59,6 +61,8 @@ void PrintDialog::on_exportButton_clicked()
                             stream << "<td>" <<
                                 getCategoryName(query.value(2).toInt())
                             << "</td>";
+                            stream << "<td>" << query.value(3).toString() << "</td>";
+                            stream << "<td>" << query.value(4).toString() << "</td>";
                         stream << "</tr>";
                     }
 
