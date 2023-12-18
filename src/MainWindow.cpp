@@ -76,8 +76,7 @@ void MainWindow::on_addButton_clicked()
 
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
-    int tempId;
-    tempId = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toInt();
+    selectedId = ui->tableView->model()->data(ui->tableView->model()->index(index.row(), 0)).toInt();
 
     QSqlQuery query;
     query.prepare(
@@ -85,9 +84,9 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
         "FROM product "
         "WHERE id = :id"
     );
-    query.bindValue(":id", tempId);
+    query.bindValue(":id", selectedId);
 
-    ui->idDisplay->setText(QString::number(tempId));
+    ui->idDisplay->setText(QString::number(selectedId));
 
     if (query.exec()) {
         query.next();
@@ -130,10 +129,11 @@ void MainWindow::on_deleteButton_clicked()
 {
     QSqlQuery query;
     query.prepare("DELETE FROM product WHERE id = :id");
-    query.bindValue(":id", ui->idDisplay->text().toInt());
+    query.bindValue(":id", selectedId);
     query.exec();
 
     ui->idDisplay->clear();
+    selectedId = -1;
     ui->nameInput->clear();
     ui->categoryCombo->clear();
 
@@ -154,8 +154,8 @@ void MainWindow::on_editButton_clicked()
     query.bindValue(":name", ui->nameInput->text());
     query.bindValue(":cat_id", ui->categoryCombo->currentIndex() + 1);
     query.bindValue(":img", ui->imgInput->text());
-    query.bindValue(":id", ui->idDisplay->text().toInt());
     query.bindValue(":date", ui->dateEdit->date());
+    query.bindValue(":id", selectedId);
     query.exec();
 
     on_updateButton_clicked();
