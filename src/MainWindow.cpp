@@ -42,6 +42,12 @@ MainWindow::~MainWindow()
     delete printDialog;
 }
 
+void MainWindow::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    on_imgInput_textChanged("img/dummy.jpg");
+}
+
 void MainWindow::on_action_triggered()
 {
     connectionDialog->show();
@@ -100,17 +106,14 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
         ui->imgInput->setText(img);
         ui->dateEdit->setDate(date);
 
-        const int labelHeight = ui->imgLabel->height();
-        const QPixmap pixmap(img);
-        ui->imgLabel->setPixmap(pixmap.scaledToHeight(labelHeight));
+        on_imgInput_textChanged(img);
     }
 }
 
 void MainWindow::on_imgInput_textChanged(QString text)
 {
     const int labelHeight = ui->imgLabel->height();
-    const QPixmap pixmap(text);
-    ui->imgLabel->setPixmap(pixmap.scaledToHeight(labelHeight));
+    ui->imgLabel->setPixmap(getImagePixmap(text).scaledToHeight(labelHeight));
 }
 
 void MainWindow::on_fpickerButton_clicked()

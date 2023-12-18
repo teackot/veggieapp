@@ -4,6 +4,7 @@
 #include <QSqlError>
 #include <QSqlResult>
 #include <QSqlQuery>
+#include <qpixmap.h>
 
 QString getCategoryName(int cat_id)
 {
@@ -38,4 +39,14 @@ QStringList getCategories()
     }
 
     return cats;
+}
+
+QPixmap getImagePixmap(QString path)
+{
+    const QPixmap pixmap = QPixmap(path);
+
+    if (pixmap.isNull())
+        return QPixmap("img/dummy.jpg");
+
+    return pixmap;
 }

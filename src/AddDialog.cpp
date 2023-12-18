@@ -27,13 +27,13 @@ void AddDialog::showEvent(QShowEvent *event)
     ui->categoryCombo->clear();
     ui->categoryCombo->addItems(getCategories());
     ui->categoryCombo->setCurrentIndex(0);
+    on_imgInput_textChanged("img/dummy.jpg");
 }
 
 void AddDialog::on_imgInput_textChanged(QString text)
 {
     const int labelHeight = ui->imgLabel->height();
-    const QPixmap pixmap(text);
-    ui->imgLabel->setPixmap(pixmap.scaledToHeight(labelHeight));
+    ui->imgLabel->setPixmap(getImagePixmap(text).scaledToHeight(labelHeight));
 }
 
 void AddDialog::on_fpickerButton_clicked()

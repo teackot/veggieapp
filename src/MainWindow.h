@@ -55,4 +55,7 @@ private:
     PrintDialog *printDialog;
 
     int selectedId;
+
+protected:
+    void showEvent(QShowEvent *event);
 };

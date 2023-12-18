@@ -48,8 +48,7 @@ void ModifyDialog::setId(int id)
 void ModifyDialog::on_fnameInput_textChanged(QString text)
 {
     const int labelHeight = ui->imgLabel->height();
-    const QPixmap pixmap(text);
-    ui->imgLabel->setPixmap(pixmap.scaledToHeight(labelHeight));
+    ui->imgLabel->setPixmap(getImagePixmap(text).scaledToHeight(labelHeight));
 }
 
 void ModifyDialog::on_fpickerButton_clicked()
